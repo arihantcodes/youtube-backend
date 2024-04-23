@@ -3,6 +3,6 @@ class ApiResponse {
          this.statusode =statusode
          this.data =data
          this.message= message
-         this.success = statusode <400
+         this.success = statusode < 400
     }
 }
