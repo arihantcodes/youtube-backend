@@ -19,6 +19,7 @@ app.use(cookieParser());
 import userRouter from "./routes/user.route.js";
 
 app.use("/api/v1/users", userRouter);
+
 app.on("error", (error) => {
   console.log("Error on the server", error);
 });
