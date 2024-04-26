@@ -17,3 +17,4 @@ router.route('/signup').post(
     registerUser)
 
 export default router;
+ 

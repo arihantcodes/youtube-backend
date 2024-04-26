@@ -20,17 +20,25 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "password is required");
   }
 
-  const ExistedUser = User.findOne({
+  const ExistedUser = await User.findOne({
     $or: [{ username }, { email }],
   });
-  // console.log(ExistedUser);
 
   if (ExistedUser) {
     throw new ApiError(400, "User already exists");
   }
   console.log(req.files?.avatar[0]?.path);
   const avatarLocal = req.files?.avatar[0]?.path;
-  const coverIamageLocal = req.files?.coverImage[0]?.path;
+
+
+  let coverIamageLocal;
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
+    coverIamageLocal=req.files.coverImage[0].path
+  } 
 
   if (!avatarLocal) {
     throw new ApiError(400, "avatar is required");
@@ -54,13 +62,12 @@ const registerUser = asyncHandler(async (req, res) => {
   const registerUser = await User.findById(user._id).select(
     "-password,-refreshToken"
   );
-  console.log(registerUser);
 
   if (!registerUser) {
     throw new ApiError(500, "Error in Register a User");
   }
 
-  return response
+  return res
     .status(201)
     .json(new ApiResponse(200, registerUser, "User Registered Successfully"));
 });
