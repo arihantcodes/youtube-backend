@@ -3,7 +3,7 @@ import { Router } from "express";
 import { upload } from "../middlewares/multer.js";
 
 import { verifyJWT } from "../middlewares/auth.js";
-import { registerUser, loginUser, Logout } from "../controllers/user.cont.js";
+import { registerUser, loginUser, Logout ,RefreshAccessToken} from "../controllers/user.cont.js";
 const router = Router();
 
 router.route("/signup").post(
@@ -22,5 +22,6 @@ router.route("/signup").post(
 
 router.route("/login").post(loginUser);
 router.route("/logout").post(verifyJWT, Logout);
+router.route("/refreshtoken").post(RefreshAccessToken);
 
 export default router;
