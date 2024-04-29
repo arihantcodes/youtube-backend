@@ -15,6 +15,7 @@ const uploadonCloudnary = async (localfile) => {
       resource_type: "auto",
     });
     
+    // todo remove olf file from cloudnary agar user new profile send kari ho to
 
     fs.unlinkSync(localfile)
 
