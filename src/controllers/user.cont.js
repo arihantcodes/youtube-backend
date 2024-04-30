@@ -221,7 +221,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   }
   user.password = conformPassword;
   await user.save({ validateBeforeSave: false });
-
+ 
   return res
     .status(200)
     .json(new ApiResponse(200, {}, "password change Succesfully"));
@@ -236,9 +236,11 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const UpdateUserDetails = asyncHandler(async (req, res) => {
   const { fullname, username } = req.body;
 
-  if (!fullname || !username) {
-    throw new ApiError(404, "give the details");
+
+  if (!fullname && !username) {
+    throw new ApiError(404, "Provide at least one detail to update");
   }
+
 
   const user = await User.findByIdAndUpdate(
     req.user?._id,
@@ -373,7 +375,7 @@ const GetUserChannel = asyncHandler(async (req, res) => {
       },
     },
   ]);
-  console.log(channel);
+ 
 
   if (!channel?.length) {
     throw new ApiError(404, "Channel does not exis");
@@ -426,7 +428,7 @@ const GetWatchHistory = asyncHandler(async (req, res) => {
       },
     },
   ]);
-  console.log(user);
+ 
 
   return res
     .status(200)
